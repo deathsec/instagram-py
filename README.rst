@@ -38,7 +38,7 @@
 | but if your **tor** installation is **misconfigured** then the blame is on you.
 
 |
-**Depends on**: python3 , tor ,  requests , requests[socks] , stem
+**Depends on**: python3 , tor ,  requests , requests[socks] , stem (**wil be installed automatically**)
 
 ==============
  Installation
@@ -59,7 +59,7 @@ Make sure you installed the **dependencies** , and countinue with this section
 ------------------------------
 
 Open your configuration file found in your home directory , this file is **very important**
-located at **~/instapy-config.json**
+located at **~/instapy-config.json** , do not change anything except tor configuration
 
 ::
 
@@ -93,7 +93,7 @@ located at **~/instapy-config.json**
 
 **ig-sig_key** : never change this unless new release, this is extracted from the instagram apk file
 
-**tor** : change everything accourding to your tor server configuration , do not mess up!
+**tor** : change everything according to your tor server configuration , do not mess up!
 
 --------------------------------------------
  Configuring Tor server to open control port
