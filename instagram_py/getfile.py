@@ -126,12 +126,14 @@ def loadSavefile(session_config):
    )
    if isfile(session_config['checkpoint']):
         readSave(session_config)
-        if session_config['save']['passwordFile'] == basename(session_config['passwordFile']):
+        if basename(session_config['save']['passwordFile']) == basename(session_config['passwordFile']):
             choose = input(Fore.CYAN + '[*] Previous attack found.... do you wish to resume? '+Fore.WHITE + Style.BRIGHT +'[Y/n] ')
             if(choose.lower() == 'y' or choose.lower() == 'yes'):
                 readSave(session_config)
+                session_config['resume'] = True
             else:
                 writeSave(session_config , 1)
+                session_config['resume'] = False
 
 def getPasswordList(session_config):
     if(isfile(session_config['passwordFile'])):

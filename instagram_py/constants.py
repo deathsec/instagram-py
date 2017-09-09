@@ -29,6 +29,7 @@ current_session = { # session configuration , very important
     "save"                 : "none",
     "start"                : "now",
     "proceedWith"          : False,
+    "resume"               : False,
     "password_file_length" : -1,
     "progress_status"      : "none",
     "tor_controller"       : "none", # the tor openned controller comes here!

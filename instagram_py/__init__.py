@@ -72,7 +72,7 @@ def main():
 
     # resume the attack if possible
     current_line = 1
-    if current_session['save'] == "none":
+    if not current_session['resume']:
         resume_line = 0
     else:
         resume_line = int(current_session['save']['line-count'])
