@@ -3,7 +3,7 @@
 # Useful constants most needed for Instagram-py
 
 appInfo = { # App information that are useful
-    "version"     : "0.0.1", # semver!
+    "version"     : "0.1.1", # semver!
     "name"        : "Instagram-py",
     "description" : " Simple Instagram brute force attacker script",
     "author"      : "The Future Shell , DeathSec",
