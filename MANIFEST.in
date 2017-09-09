@@ -1,6 +1,7 @@
 #MANIFEST.in
 exclude .gitignore
 exclude .coverage
+exclude preview.png
 exclude .travis.yml
 include README.rst
 include setup.cfg
