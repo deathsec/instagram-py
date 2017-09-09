@@ -133,4 +133,5 @@ open your **tor configuration** file usually located at **/etc/tor/torrc**
 =============
 
 The MIT License,
-| Copyright (C) 2017 The Future Shell , DeathSec
+
+Copyright (C) 2017 The Future Shell , DeathSec
