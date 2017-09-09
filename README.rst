@@ -13,10 +13,14 @@
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square   
       :target: https://raw.githubusercontent.com/deathsec/instagram-py/master/LICENSE
 
-    
-    
-|
+..
 
+    | Instagram-py performs slick brute force attack on Instagram without any type of password limiting
+    | and also resumes your attack in ease. 
+    
+    --DeathSec
+
+  
 .. image:: https://raw.githubusercontent.com/deathsec/instagram-py/master/preview.png
 
 .. image:: http://forthebadge.com/images/badges/built-with-love.svg
@@ -35,10 +39,6 @@
 
 |
 **Depends on**: python3 , tor ,  requests , requests[socks] , stem
-
-
-**Supports**: Resume password cracking any time!
-
 
 ==============
  Installation
