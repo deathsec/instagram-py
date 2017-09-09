@@ -32,3 +32,84 @@
 | Instagram-Py is **proved** and can test **over 6M** passwords on a single instagram account with **less resource** as possible
 | This script mimics the activities of the official **instagram android app** and sends request over **tor** so you are secure ,
 | but if your **tor** installation is **misconfigured** then the blame is on you.
+
+|
+**Depends on**: python3 , tor ,  requests , requests[socks] , stem
+
+==============
+ Installation
+==============
+
+Make sure you installed the **dependencies** , and countinue with this section
+
+::
+
+ $ git clone https://github.com/deathsec/instagram-py
+ $ cd instagram-py
+ $ sudo python3 setup.py install # only available for python3
+ $ cp instapy-config.json ~ # copy the configuration file to your home !IMPORTANT!
+ $ instagram-py # installed successfully
+
+------------------------------
+    Configuring Instagram-Py
+------------------------------
+
+Open your configuration file found in your home directory , this file is **very important**
+located at **~/instapy-config.json**
+
+::
+
+ $ vim ~/instapy-config.json # open it with your favorite text editior!
+
+**The configuration file looks like this**
+
+::
+
+ {
+  "api-url" : "https://i.instagram.com/api/v1/",
+  "user-agent" : "Instagram 10.26.0 Android (18/4.3; 320dp..... ",
+  "ig-sig-key" : "4f8732eb9ba7d1c8e8897a75d6474d4eb3f5279137431b2aafb71fafe2abe178",
+  "ig-sig-version" : "4",
+  "tor" : { 
+     "server" : "127.0.0.1",
+     "port" : "9050",
+     "protocol" : "socks5",
+     "control" : {
+           "password" : "",
+           "port" : "9051"
+       }
+   }
+    
+ }
+
+
+**api-url** : do not change this unless you know what you are doing
+
+**user-agent** : do not change this unless you know your stuff
+
+**ig-sig_key** : never change this unless new release, this is extracted from the instagram apk file
+
+**tor** : change everything accourding to your tor server configuration , do not mess up!
+
+--------------------------------------------
+ Configuring Tor server to open control port
+--------------------------------------------
+
+open your **tor configuration** file usually located at **/etc/tor/torrc**
+::
+ 
+ $ sudo vim /etc/tor/torrc # open it with your text editor
+ 
+
+**search** for the file for this **specific section**
+
+::
+
+ ## The port on which Tor will listen for local connections from Tor
+ ## controller applications, as documented in control-spec.txt.
+ #ControlPort 9051
+ 
+**uncomment** 'ControlPort' by deleting the **#** before 'ControlPort' , **now save the file and restart your tor server**
+
+
+
