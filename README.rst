@@ -27,7 +27,7 @@
 .. image:: http://forthebadge.com/images/badges/made-with-python.svg
       :target: #
 |
-| **Intagram-Py** is a simple python script to perform basic **brute force** attack against **Instagram** ,   
+| **Instagram-Py** is a simple python script to perform basic **brute force** attack against **Instagram** ,   
 | this script can **bypass** login limiting on wrong passwords ,  so basically it can test **infinite number of passwords**.
 | Instagram-Py is **proved** and can test **over 6M** passwords on a single instagram account with **less resource** as possible
 | This script mimics the activities of the official **instagram android app** and sends request over **tor** so you are secure ,
@@ -35,6 +35,10 @@
 
 |
 **Depends on**: python3 , tor ,  requests , requests[socks] , stem
+
+
+**Supports**: Resume password cracking any time!
+
 
 ==============
  Installation
@@ -123,3 +127,10 @@ open your **tor configuration** file usually located at **/etc/tor/torrc**
 
  $ instagram-py your_account_username path_to_password_list
 
+
+=============
+   License
+=============
+
+The MIT License,
+| Copyright (C) 2017 The Future Shell , DeathSec
