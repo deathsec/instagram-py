@@ -111,5 +111,15 @@ open your **tor configuration** file usually located at **/etc/tor/torrc**
  
 **uncomment** 'ControlPort' by deleting the **#** before 'ControlPort' , **now save the file and restart your tor server**
 
+**now you are ready to crack any instagram account , make sure your tor configuration matched ~/instapy-config.json** 
 
+=============
+    Usage
+=============
+
+**Finally** , now you can use instagram-py!
+
+::
+
+ $ instagram-py your_account_username path_to_password_list
 
