@@ -11,6 +11,8 @@ from .logger import *
 from .colors import Fore , Back , Style , init
 from .instagram_bot import InjectPassword
 
+__version__ = appInfo['version']
+
 init(autoreset=True) # set to automatically reset colors!
 
 # set current proc globals
