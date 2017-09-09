@@ -23,7 +23,8 @@
       :target: #
 .. image:: http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg
       :target: #
-.. image:: http://forthebadge.com/images/badges/check-it-out.svg
+      
+.. image:: http://forthebadge.com/images/badges/made-with-python.svg
       :target: #
 |
 | **Intagram-Py** is a simple python script to perform basic **brute force** attack against **Instagram** ,   
