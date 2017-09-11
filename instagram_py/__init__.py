@@ -87,6 +87,7 @@ def main():
                 current_session['proceedWith'] = False
                 while not current_session['proceedWith']:
                     InjectPassword(current_session , current_line)
+                current_line += 1 # add line if we finished testing it!
 
 
     # if no password is found in the given password list then report error and exit

@@ -8,6 +8,7 @@ import hmac
 import urllib
 import hashlib
 import json
+from os.path import basename
 from time import sleep
 from stem import Signal # to control tor server
 from stem.control import Controller
@@ -23,7 +24,7 @@ def _writeSave(session_config , current_line):
     savefile = open(session_config['checkpoint'] , 'w')
     savefile.write(
     '{ "username" : "'+ session_config['username']+
-    '" , "passwordFile" : "'+ session_config['passwordFile']+
+    '" , "passwordFile" : "'+ basename(session_config['passwordFile'])+
     '" ,"line-count" : "'+ str(current_line)+
     '"}'
     )
