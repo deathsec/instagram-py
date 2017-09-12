@@ -1,5 +1,12 @@
 # Intagram-py Changelog
 
+- version 0.3.1
+	* duplicate of v0.2.1 for a mistake in pypi
+
+- version 0.2.1 
+	* fixed never resume attack bug
+	* fixed corrupted savefile bug
+
 - version 0.1.1
 	* fixed left out password on ip change
 	* fixed corrupted buffer on password tries
