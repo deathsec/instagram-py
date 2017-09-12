@@ -53,6 +53,7 @@
 ::
 
  $ sudo wget -O /usr/bin/instagram-py "https://git.io/v5DsL"
+ $ sudo chmod +x /usr/bin/instagram-py
 
 
 **For 64 bit Linux users(x86_64)**
@@ -60,6 +61,7 @@
 ::
  
  $ sudo wget -O /usr/bin/instagram-py "https://git.io/v5Ds3"
+ $ sudo chmod +x /usr/bin/instagram-py
  
 
 **If that did not work then use pip to install Instagram-Py, Just follow the instructions bellow!**
