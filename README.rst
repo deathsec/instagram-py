@@ -44,6 +44,26 @@
  Installation
 ==============
 
+-------------------------------------
+ Using Static Compiled Instagram-Py
+-------------------------------------   
+
+**For 32 bit Linux users(i386)**
+
+::
+
+ $ sudo wget -O /usr/bin/instagram-py "https://git.io/v5DsL"
+
+
+**For 64 bit Linux users(x86_64)**
+
+::
+ 
+ $ sudo wget -O /usr/bin/instagram-py "https://git.io/v5Ds3"
+ 
+
+**If that did not work then use pip to install Instagram-Py, Just follow the instructions bellow!**
+
 
 ::
 
