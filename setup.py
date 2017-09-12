@@ -17,6 +17,7 @@ setup(
     description = 'A python script to execute brute force attack on Instagram',
     long_description = long_description,
     url = 'https://github.com/DeathSec/Instagram-Py',
+    download_url = 'https://github.com/peterldowns/mypackage/archive/'+str(__version__)+'.tar.gz',
     author = 'DeathSec',
     author_email = 'antonyjr@protonmail.com',
     license = 'MIT',
