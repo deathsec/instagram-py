@@ -48,11 +48,14 @@ Make sure you installed the **dependencies** , and countinue with this section
 
 ::
 
- $ git clone https://github.com/deathsec/instagram-py
- $ cd instagram-py
- $ sudo python3 setup.py install # only available for python3
- $ cp instapy-config.json ~ # copy the configuration file to your home !IMPORTANT!
+ $ sudo easy_install3 -U pip # you have to install python3-setuptools
+ $ sudo pip3 install requests --upgrade
+ $ sudo pip3 install requests[socks]
+ $ sudo pip3 install stem
+ $ sudo pip3 install instagram-py
  $ instagram-py # installed successfully
+ $ # Now lets copy the config file to your hard drive!
+ $ wget -O ~ https://raw.githubusercontent.com/deathsec/instagram-py/master/instapy-config.json
 
 ------------------------------
     Configuring Instagram-Py
