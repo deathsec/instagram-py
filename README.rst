@@ -55,7 +55,9 @@ Make sure you installed the **dependencies** , and countinue with this section
  $ sudo pip3 install instagram-py
  $ instagram-py # installed successfully
  $ # Now lets copy the config file to your hard drive!
- $ wget -O ~ https://raw.githubusercontent.com/deathsec/instagram-py/master/instapy-config.json
+ $ cd
+ $ # This is the important thing , your configuration lies here!
+ $ wget https://raw.githubusercontent.com/deathsec/instagram-py/master/instapy-config.json
 
 ------------------------------
     Configuring Instagram-Py
