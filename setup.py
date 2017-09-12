@@ -1,6 +1,5 @@
 from codecs import open
 from os.path import abspath, dirname, join , expanduser
-from subprocess import call
 
 from setuptools import Command, find_packages, setup
 
@@ -12,7 +11,7 @@ with open(join(this_dir, 'README.rst'), encoding='utf-8') as file:
     long_description = file.read()
 
 setup(
-    name = 'intagram-py',
+    name = 'instagram-py',
     version = __version__,
     description = 'A python script to execute brute force attack on Instagram',
     long_description = long_description,
