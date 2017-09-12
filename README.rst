@@ -38,13 +38,12 @@
 | but if your **tor** installation is **misconfigured** then the blame is on you.
 
 |
-**Depends on**: python3 , tor ,  requests , requests[socks] , stem (**wil be installed automatically**)
+**Depends on**: python3 , tor ,  requests , requests[socks] , stem
 
 ==============
  Installation
 ==============
 
-Make sure you installed the **dependencies** , and countinue with this section
 
 ::
 
