@@ -27,7 +27,8 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.6'
     ],
-    keywords = 'cli',
+    keywords = ['cli' . 'hack' , 'instagram' , 'with' , 'out' , 'password' , 'limit' , 'brute' ,
+                'force' , 'attack' , 'instagram'],
     packages = find_packages(exclude=['docs', 'tests*']),
     install_requires = ['requests' , 'requests[socks]' , 'stem'],
     entry_points = {
