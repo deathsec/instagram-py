@@ -44,16 +44,15 @@
  Installation
 ==============
 
--------------------------------------
- Using Static Compiled Instagram-Py
--------------------------------------   
+-------------------------------
+ using pip to get Instagram-py
+-------------------------------
 
-**Use pip to install Instagram-Py, Just follow the instructions bellow!**
-
+**Make sure you have got the latest version of pip(>= 9.0 and python(>= 3.6)**
 
 ::
 
- $ sudo easy_install3 -U pip # you have to install python3-setuptools
+ $ sudo easy_install3 -U pip # you have to install python3-setuptools , update pip
  $ sudo pip3 install requests --upgrade
  $ sudo pip3 install requests[socks]
  $ sudo pip3 install stem
