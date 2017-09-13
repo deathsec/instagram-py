@@ -70,7 +70,7 @@ def InjectPassword(session_config , current_line):
         print('\n')
         log_result(session_config)
     else:
-        message = json.loads(r.content);
+        message = r.json() # found out that requests has its own json decoder cross python!
         if message['message'] == 'challenge_required':
             session_config['progress_status'] = ' [+] PASSWORD CRACKED '
             print_progress(ptotal,ptotal , session_config )

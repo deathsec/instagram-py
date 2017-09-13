@@ -1,5 +1,10 @@
 # Intagram-py Changelog
 
+- version 0.3.2
+	* fixed json decoding type error
+	* support for python 3.4 , 3.5
+	* added pip support
+
 - version 0.3.1
 	* duplicate of v0.2.1 for a mistake in pypi
 
