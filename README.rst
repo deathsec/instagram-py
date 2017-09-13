@@ -48,25 +48,7 @@
  Using Static Compiled Instagram-Py
 -------------------------------------   
 
-**For 32 bit Linux users(i386)**
-
-::
-
- $ sudo wget -O /usr/bin/instagram-py "https://git.io/v5DsL"
- $ wget -O ~/instapy-config.json "https://git.io/v5DGy"
- $ sudo chmod +x /usr/bin/instagram-py
-
-
-**For 64 bit Linux users(x86_64)**
-
-::
- 
- $ sudo wget -O /usr/bin/instagram-py "https://git.io/v5Ds3"
- $ wget -O ~/instapy-config.json "https://git.io/v5DGy"
- $ sudo chmod +x /usr/bin/instagram-py
- 
-
-**If that did not work then use pip to install Instagram-Py, Just follow the instructions bellow!**
+**Use pip to install Instagram-Py, Just follow the instructions bellow!**
 
 
 ::
