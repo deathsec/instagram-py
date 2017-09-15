@@ -151,7 +151,7 @@ wish to recreate this program in any other language.
 Getting the magic cookie is the simplest job , all we need to do is send a get request to **https://i.instagram.com/api/v1/si/fetch_headers/?challenge_type=signup&guid=** , where the **guid** get parameter is a random 32 character string.
 The random 32 character string can be generator using python's simple **uuid library** , to be specific **v4** of **UUID**.
 So finally we just have to request the url **https://i.instagram.com/api/v1/si/fetch_headers/?challenge_type=signup&guid=800e88b931bf491fa3b4a7afa4e679eb** and get the cookie named **csrftoken** , if we observe the **response header** we
-could see that out cookie only **expires** next **year** the same day. So by this we only have to make this request once
+could see that our cookie only **expires** next **year** the same day. So by this we only have to make this request once
 and can use it for a year! How vulnerable is that?... 
 
 .. image:: https://raw.githubusercontent.com/deathsec/instagram-py/master/observations/cookies.png 
