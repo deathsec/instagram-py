@@ -158,6 +158,65 @@ and can use it for a year! How vulnerable is that?...
       :target: #
 
 
+**Step 2:** Build a post request with Instagram's signature.
+
+This part is **simple** but may be difficult to setup , first i need to get instagram's signature
+which is only present in their free apk from google play , Remember our **Strength can be our Weakness**
+, All i have to do reverse engineer the apk and find the signature, lets call it **ig_sig**.
+
+::
+ ig_sig = 4f8732eb9ba7d1c8e8897a75d6474d4eb3f5279137431b2aafb71fafe2abe178
+ ig_version = 4
+
+**Instagram** uses **HMAC Authentication** for login stuff, so lets use python's **hmac library**.
+But first we have to build our body which will be encoded in json for it to actually sign with 
+**ig_sig** , So the post **body** looks likes this...
+
+
+::
+ phone_id   = <RANDOM 32 CHARACTER STRING SEPERATED WITH - on EQUAL INTERVALS>
+ _csrftoken = <THE MAGIC COOKIE THAT WE GOT!>
+ username   = <TARGET ACCOUNT>
+ guid       = <RANDOM 32 CHARACTER STRING SEPERATED WITH - on EQUAL INTERVALS>
+ device_id  = android-<RANDOM 16 CHARACTER STRING>
+ password   = <PASSWORD TO TRY>
+ login_attempt_count = 0
+
+
+The above will be encoded to **JSON** , So to test the password we have to post the data to this url
+**https://i.instagram.com/api/v1/accounts/login/ig_sig_key_version=4&signed_body=<SIGNED BODY>.<URL ENCODED JSON DATA>** .
+
+**<SIGNED BODY>:** using **HMAC** , sign our json encoded data with **ig_sig** and return a hexa value.
+
+**<URL ENCODED JSON DATA>:** the same data in json but we url encode so that it goes properly to insta!
+
+So to test a account with username as **USERNAME** and password with **PASSWORD** we simply request this
+url **https://i.instagram.com/api/v1/accounts/login/ig_sig_key_version=4&signed_body=bc90e1b7d430f39152e92b4e7d517bfb231dbe0515ed2071dc784cf876e301c3.%7B%22phone_id%22%3A%20%2232abb45c-f605-4fd7-9b5e-674115516b90%22%2C%20%22_csrftoken%22%3A%20%22PyMH2niVQrk41UIBW0lKilleG7GylluQ%22%2C%20%22username%22%3A%20%22USERNAME%22%2C%20%22guid%22%3A%20%2267ca220c-a9eb-4240-b173-2d253808904d%22%2C%20%22device_id%22%3A%20%22android-283abce46cb0a0bcef4%22%2C%20%22password%22%3A%20%22PASSWORD%22%2C%20%22login_attempt_count%22%3A%20%220%22%7D** 
+
+**Take a look** how I did it... 
+
+.. image:: https://raw.githubusercontent.com/deathsec/instagram-py/master/observations/login_create.png
+
+
+**Step 3:** With the json response and response code , we determine the password is correct or wrong.
+
+if **We get response 200** then the login is success but if we get **response 400** , We inspect the
+**json data** for clues if it is the **correct password or invalid request or too many tries**.
+So we inspect the **message** from instagram json response!
+
+**Message = Challenge Required** , then the password is correct but instagram got some questions so
+we must wait until the user logs in and answer the question and if we are lucky they will not change
+the password and we could login in later(**Most of the time people won't change the password!**)
+
+**Message = The password you entered is incorrect.** , then the password is incorrect for sure , try
+another.
+
+**Message as something like word invalid in it then** , some other error so just try again, can happen
+because of wordlist encoding error which i ignored because all the worldlist have encoding error!
+
+**Message = Too many tries** , Time change our ip and loop but we don't want to change our magic cookie
+
+**Thats it you just hacked instagram with a very simple algorithm!**
 
 =============
    License
