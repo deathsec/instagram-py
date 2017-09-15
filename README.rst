@@ -141,6 +141,7 @@ open your **tor configuration** file usually located at **/etc/tor/torrc**
 
 **Instagram-Py** uses a very simple algorimthm for checking passwords efficiently , this section is dedicated for those who
 wish to recreate this program in any other language.
+
 -------------
  What we do
 -------------
