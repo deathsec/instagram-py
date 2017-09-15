@@ -165,6 +165,7 @@ which is only present in their free apk from google play , Remember our **Streng
 , All i have to do reverse engineer the apk and find the signature, lets call it **ig_sig**.
 
 ::
+ 
  ig_sig = 4f8732eb9ba7d1c8e8897a75d6474d4eb3f5279137431b2aafb71fafe2abe178
  ig_version = 4
 
@@ -174,6 +175,7 @@ But first we have to build our body which will be encoded in json for it to actu
 
 
 ::
+ 
  phone_id   = <RANDOM 32 CHARACTER STRING SEPERATED WITH - on EQUAL INTERVALS>
  _csrftoken = <THE MAGIC COOKIE THAT WE GOT!>
  username   = <TARGET ACCOUNT>
