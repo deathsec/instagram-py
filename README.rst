@@ -1,6 +1,13 @@
 ==============
  Instagram-Py 
 ==============
+
+    | Instagram-py performs slick brute force attack on Instagram without any type of password limiting
+    | and also resumes your attack in ease. 
+    
+    --DeathSec
+
+
 .. image:: https://img.shields.io/github/issues/deathsec/instagram-py.svg?style=flat-square   
       :target: https://github.com/deathsec/instagram-py/issues
 
@@ -15,13 +22,10 @@
 
 ..
 
-    | Instagram-py performs slick brute force attack on Instagram without any type of password limiting
-    | and also resumes your attack in ease. 
-    
-    --DeathSec
+
 
   
-.. image:: https://raw.githubusercontent.com/deathsec/instagram-py/master/preview.png
+.. image:: https://raw.githubusercontent.com/deathsec/instagram-py/master/preview.gif
 
 .. image:: http://forthebadge.com/images/badges/built-with-love.svg
       :target: #
@@ -30,14 +34,42 @@
       
 .. image:: http://forthebadge.com/images/badges/made-with-python.svg
       :target: #
-|
+      
+
+      
+-------
+ Why?
+-------
+
+| **I Actually** started this **project** for **proof of concept** that we can brute force **Instagram** forever.
+| When I created the prototype and posted on **Twitter** , I got a **lot of people** who wanted a simple slick tool to execute 
+| brute force attack on **Instagram** , So I thought why reinvent the wheel?....
+| So I searched **Github** and found nothing worth value , some were fake or poorly engineered!
+| And here is it **a Authentic brute force tool for Instagram**
+
+
+------
+ How?
+------
+
+| We use , **tor** to change our ip once blocked for many tries and continue attack.
+| Since the official api is not a hacker wants, So we use the **InstagramAPK signature** to stay **anonymous!**
+| And we also **save** the **progress** so that even in network interuption we can avoid breaking the computer!
+
+ **See the 'Algorimthm' section down below for more hackery!**
+
+-------
+ What?
+-------
+
 | **Instagram-Py** is a simple python script to perform basic **brute force** attack against **Instagram** ,   
 | this script can **bypass** login limiting on wrong passwords ,  so basically it can test **infinite number of passwords**.
 | Instagram-Py is **proved** and can test **over 6M** passwords on a single instagram account with **less resource** as possible
 | This script mimics the activities of the official **instagram android app** and sends request over **tor** so you are secure ,
 | but if your **tor** installation is **misconfigured** then the blame is on you.
 
-|
+
+
 **Depends on**: python3 , tor ,  requests , requests[socks] , stem
 
 ==============
@@ -61,9 +93,9 @@
  $ # Now lets copy the config file to your hard drive!
  $ wget -O ~/instapy-config.json "https://git.io/v5DGy"
 
-------------------------------
+--------------------------------
     Configuring Instagram-Py
-------------------------------
+--------------------------------
 
 Open your configuration file found in your home directory , this file is **very important**
 located at **~/instapy-config.json** , do not change anything except tor configuration
@@ -102,11 +134,13 @@ located at **~/instapy-config.json** , do not change anything except tor configu
 
 **tor** : change everything according to your tor server configuration , do not mess up!
 
---------------------------------------------
- Configuring Tor server to open control port
---------------------------------------------
+--------------------------------------------------
+    Configuring Tor server to open control port
+--------------------------------------------------
 
 open your **tor configuration** file usually located at **/etc/tor/torrc**
+
+
 ::
  
  $ sudo vim /etc/tor/torrc # open it with your text editor
