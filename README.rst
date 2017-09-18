@@ -216,7 +216,7 @@ another.
 **Message as something like word invalid in it then** , some other error so just try again, can happen
 because of wordlist encoding error which i ignored because all the worldlist have encoding error!
 
-**Message = Too many tries** , Time change our ip and loop but we don't want to change our magic cookie
+**Message = Too many tries** , Time to change our ip and loop but we don't want to change our magic cookie
 
 **Thats it you just hacked instagram with a very simple algorithm!**
 
