@@ -20,7 +20,8 @@
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square   
       :target: https://raw.githubusercontent.com/deathsec/instagram-py/master/LICENSE
 
-..
+.. image:: https://img.shields.io/pypi/v/instagram-py.svg?style=flat-square
+      :target: #
 
 
 
@@ -45,7 +46,7 @@
 | When I created the prototype and posted on **Twitter** , I got a **lot of people** who wanted a simple slick tool to execute 
 | brute force attack on **Instagram** , So I thought why reinvent the wheel?....
 | So I searched **Github** and found nothing worth value , some were fake or poorly engineered!
-| And here is it **a Authentic brute force tool for Instagram**
+| And here it is **a Authentic brute force tool for Instagram**
 
 
 ------
