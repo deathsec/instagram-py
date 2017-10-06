@@ -23,8 +23,8 @@
 # SOFTWARE.                                                                       #
 #*********************************************************************************#
 
-import instagram_py
+import InstagramPy
 
 if __name__ == '__main__':
-            instagram_py.main()
+            InstagramPy.main()
 
