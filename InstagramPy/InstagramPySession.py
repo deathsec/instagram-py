@@ -34,6 +34,7 @@ class InstagramPySession:
     username        = ''
     password        = ''
     password_list   = None
+    password_list_md5_sum= None
     password_list_buffer = None
     password_list_length = 0
     current_line    = 1
@@ -50,6 +51,7 @@ class InstagramPySession:
             reporter.FindError("password list not found at {}.".format(password_list) , True)
         self.password_list = password_list
         self.password_list_buffer = open(password_list , encoding='utf-8' , errors='ignore')
+        self.password_list_md5_sum = str(self.md5sum(open(password_list , "rb")).hexdigest())
 
         with open(password_list , encoding='utf-8' , errors='ignore') as f:
             for line in f:
@@ -97,7 +99,10 @@ class InstagramPySession:
                     'User-Agent' : self.user_agent
                 }
             )
-            self.ip = self.bot.get('https://icanhazip.com').content.rstrip().decode()
+            try:
+                self.ip = self.bot.get('https://icanhazip.com').content.rstrip().decode()
+            except requests.Exceptions as err:
+                reporter.FindError("Connection to host failed , check your connection and tor configuration." , True)
 
         if not os.path.exists(save_location):
             reporter.Try(os.mkdir(save_location))
@@ -113,8 +118,9 @@ class InstagramPySession:
     def ReadSaveFile(self):
         if self.current_save == None:
             self.CreateSaveFile()
-        self.current_line = (json.load(open(self.current_save , 'r')))['line-count']
-        if self.password_list == (json.load(open(self.current_save , 'r')))['password-file']:
+        SaveFile = json.load(open(self.current_save , 'r'))
+        self.current_line = SaveFile['line-count']
+        if self.password_list_md5_sum == SaveFile['password-file-md5']:
             c_line = 1
             for line in self.password_list_buffer:
                 self.password = str(line)
@@ -125,22 +131,21 @@ class InstagramPySession:
     def UpdateSaveFile(self):
         if not self.current_save == None:
             updatefile = open(self.current_save , 'w')
-            updatefile.write(
-            '{"username" : "'+str(self.username)+'" ,"password-file" : "'+str(self.password_list)+'" ,"line-count" : '+str(self.current_line)+' }'
-            )
+            json.dump(
+                {
+                    "username"          : str(self.username) ,
+                    "password-file-md5" : str(self.password_list_md5_sum) ,
+                    "line-count"        : self.current_line
+                }
+            , updatefile)
             updatefile.close()
 
     def CreateSaveFile(self):
         if self.current_save == None and not self.save_data == None:
             save = '{}{}.dat'.format(self.save_data , hashlib.sha224(self.username.encode('utf-8')).hexdigest())
-            if not os.path.isfile(save):
-                savefile = open(save, 'w')
-                savefile.write(
-                '{"username" : "'+str(self.username)+'" ,"password-file" : "'+str(self.password_list)+'" ,"line-count" : 1}'
-                )
-                savefile.close()
             self.current_save = save
-
+            if not os.path.isfile(save):
+                self.UpdateSaveFile()
 
     def CurrentPassword(self):
         return self.password
@@ -164,7 +169,7 @@ class InstagramPySession:
             if not data:
                 break
             md5.update(data)
-        return md5.digest()
+        return md5
 
     def ChangeIPAddress(self):
         if not self.tor_controller == None:
@@ -176,9 +181,12 @@ class InstagramPySession:
     def OpenTorController(self, port , password):
         self.tor_controller = Controller.from_port(port = int(port))
         if  password == None:
-            self.reporter.Try(self.tor_controller.authenticate)
+            try:
+                self.tor_controller.authenticate()
+            except (stem.SocketError,ConnectionRefusedError) as err:
+                reporter.FindError(err , True)
         else:
             try:
                 self.tor_controller.authenticate(password = password)
-            except BaseException as err:
+            except stem.SocketError as err:
                 reporter.FindError(err , True)

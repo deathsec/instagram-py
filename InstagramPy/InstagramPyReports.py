@@ -5,7 +5,6 @@
 # @description : reports and exits the program if error occurs with specific
 #                error code with ease!
 from colors import *
-import requests
 
 class InstagramPyReports:
 
@@ -17,13 +16,17 @@ class InstagramPyReports:
         self.VERBOSE_MODE = verbose
         self.appInfo = appinfo
         self.HEADER = "{} {} , {}.\nCopyright (C) {} {} , {}.\n".format(appinfo['name'] , appinfo['version'] , appinfo['description'] , appinfo['year'] , appinfo['company'] , appinfo['author'])
-
+        self.HEADER = Fore.MAGENTA + self.HEADER + Style.RESET_ALL
     def ExitsNow(self):
         exit(-1)
 
+    def ReportPassword(password , username):
+        print(self.HEADER)
+        print(Style.BRIGHT + Fore.GREEN + "attack success:: " + Fore.CYAN + "[ USERNAME -> " + username + " ] [ PASSWORD -> " + password+ " ]."+ Style.RESET_ALL)
+        exit(0)
+
     def FindError(self , error , withHeader):
         if withHeader:
-            self.HEADER = Fore.CYAN + self.HEADER + Style.RESET_ALL
             print(self.HEADER)
         print(Style.BRIGHT + Fore.RED + "fatal error:: " + Style.RESET_ALL + str(error))
         self.ExitsNow()
@@ -37,5 +40,5 @@ class InstagramPyReports:
     def Try(self , callback):
         try:
             callback()
-        except BaseException as err:
+        except (BaseException,Exception) as err:
             self.FindError(err)

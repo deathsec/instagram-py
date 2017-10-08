@@ -6,7 +6,7 @@
 #                using Python's ncurses library.
 import curses
 import threading
-import constants
+import AppInfo
 
 class InstagramPyCLITerminator(threading.Thread):
     cli = None
@@ -71,9 +71,9 @@ class InstagramPyCLI:
             if info['name'] and info['author']: # try if we got the info's right
                 self.appInfo = info
             else:
-                self.appInfo = constants.appInfo # or revert to default info!
+                self.appInfo = AppInfo.appInfo # or revert to default info!
         except:
-                self.appInfo = constants.appInfo
+                self.appInfo = AppInfo.appInfo
 
         self.started = started # the attack begin!
         self.total   = int(total)
