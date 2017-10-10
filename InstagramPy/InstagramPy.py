@@ -11,7 +11,6 @@ import urllib
 import json
 import hashlib
 import curses
-from InstagramPyCLI import InstagramPyCLITerminator
 
 class InstagramPy:
     '''
@@ -53,9 +52,6 @@ class InstagramPy:
                                        self.password_found,
                                        verbose
             )
-            self.terminator_thread = InstagramPyCLITerminator(self.cli , self.RepaintCLI)
-            # self.terminator_thread.start()
-            # self.terminator_thread.join()
 
     def RepaintCLI(self):
         if not self.cli == None:

@@ -8,28 +8,6 @@ import curses
 import threading
 import AppInfo
 
-class InstagramPyCLITerminator(threading.Thread):
-    cli = None
-    exit_now = False
-    repainter = None
-    def __init__(self , cli , repainter):
-        threading.Thread.__init__(self)
-        self.cli = cli
-        self.repainter = repainter
-
-    def run(self):
-        while True:
-            c = self.cli.GetsChar()
-            if c == ord('q') or c == 27:
-                break
-            elif c == curses.KEY_RESIZE:
-                self.repainter()
-                c = self.cli.GetsChar()
-            elif self.exit_now == True:
-                break
-        self.cli.CloseCLI()
-        self.exit_now = True
-
 class InstagramPyCLI:
     '''
         @progress_win -> Progress bar that will be repainted every time

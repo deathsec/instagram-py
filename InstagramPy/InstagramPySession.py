@@ -17,8 +17,8 @@ DEFAULT_PATH = "{}/".format(os.path.expanduser('~'))
 class InstagramPySession:
     '''
         __init__:
-            - loads configuration from specified file
-            - starts a save file instance
+            - loads configuration from specified file.
+            - gets the perfect place for the save file.
             - sets class variables for later use.
     '''
 
@@ -28,7 +28,7 @@ class InstagramPySession:
     ig_sig_key      = None
     ig_sig_version  = None
     tor_proxy       = None
-    tor_controler   = None
+    tor_controller   = None
     save_data       = None
     current_save    = None
     username        = ''
@@ -50,6 +50,10 @@ class InstagramPySession:
         if not os.path.isfile(password_list):
             reporter.FindError("password list not found at {}.".format(password_list) , True)
         self.password_list = password_list
+        '''
+            Note: Always open password list with errors ignored because all password list
+                  mostly has a wrong encoding or the users pc does not support it!
+        '''
         self.password_list_buffer = open(password_list , encoding='utf-8' , errors='ignore')
         self.password_list_md5_sum = str(self.md5sum(open(password_list , "rb")).hexdigest())
 
@@ -99,6 +103,11 @@ class InstagramPySession:
                     'User-Agent' : self.user_agent
                 }
             )
+
+            '''
+                Note: https://icanhazip.com is a free domain to get your current tor ip
+                      this is not a dangerous website for sure , thank you @majorhayden
+            '''
             try:
                 self.ip = self.bot.get('https://icanhazip.com').content.rstrip().decode()
             except requests.Exceptions as err:
@@ -115,12 +124,21 @@ class InstagramPySession:
         )
         self.magic_cookie = self.bot.cookies['csrftoken']
 
+
+    '''
+        ReadSaveFile()
+            - Checks if we have located the save file
+            - if not creates one
+            - opens the save file and load it as json data
+            - check if the user uses the same password list file for the same user
+            - set the current password pointer to the given data
+    '''
     def ReadSaveFile(self):
         if self.current_save == None:
             self.CreateSaveFile()
         SaveFile = json.load(open(self.current_save , 'r'))
         self.current_line = SaveFile['line-count']
-        if self.password_list_md5_sum == SaveFile['password-file-md5']:
+        if self.password_list_md5_sum == SaveFile['password-file-md5'] and self.username == SaveFile['username']:
             c_line = 1
             for line in self.password_list_buffer:
                 self.password = str(line)
@@ -128,6 +146,12 @@ class InstagramPySession:
                     break
                 c_line += 1
 
+
+    '''
+        UpdateSaveFile()
+            - check if we have created a save file
+            - if yes , rewrite the the save file with the current session!
+    '''
     def UpdateSaveFile(self):
         if not self.current_save == None:
             updatefile = open(self.current_save , 'w')
@@ -140,6 +164,12 @@ class InstagramPySession:
             , updatefile)
             updatefile.close()
 
+
+    '''
+        CreateSaveFile()
+            - checks if we have not openned any save file but know the save location.
+            - if yes , creates with default settings to the location.
+    '''
     def CreateSaveFile(self):
         if self.current_save == None and not self.save_data == None:
             save = '{}{}.dat'.format(self.save_data , hashlib.sha224(self.username.encode('utf-8')).hexdigest())
@@ -147,9 +177,18 @@ class InstagramPySession:
             if not os.path.isfile(save):
                 self.UpdateSaveFile()
 
+    '''
+        CurrentPassword()
+            - returns the current password pointed to the password list
+    '''
     def CurrentPassword(self):
         return self.password
 
+
+    '''
+        NextPassword()
+            - increaments and sets the next password as our current password
+    '''
     def NextPassword(self):
         if not self.password_list_buffer == None:
             for line in self.password_list_buffer:
@@ -159,9 +198,19 @@ class InstagramPySession:
         else:
             reporter.FindError("calling NextPassword without password file." , True)
 
+    '''
+        GetUsername()
+            - returns current session username
+    '''
     def GetUsername(self):
         return self.username
 
+    '''
+        md5sum( FILE POINTER , BLOCK SIZE)
+            - opens large files from FILE POINTER
+            - calculates md5 with BLOCK SIZE with respect to FILE POINTER
+            - finalizes and returns a hashlib object!
+    '''
     def md5sum(self , fp , block_size=2**20):
         md5 = hashlib.md5()
         while True:
@@ -171,6 +220,11 @@ class InstagramPySession:
             md5.update(data)
         return md5
 
+    '''
+        ChangeIPAddress()
+            - stem <-> Signal
+            - Changes Tor Identity with the controller!
+    '''
     def ChangeIPAddress(self):
         if not self.tor_controller == None:
             self.tor_controller.signal(Signal.NEWNYM) # signal tor to change ip
@@ -178,15 +232,16 @@ class InstagramPySession:
             return True
         return False
 
+    '''
+        OpenTorController(PORT , PASSWORD)
+            - Creates a fresh tor controller instance to the session
+    '''
     def OpenTorController(self, port , password):
-        self.tor_controller = Controller.from_port(port = int(port))
-        if  password == None:
-            try:
+        try:
+            self.tor_controller = Controller.from_port(port = int(port))
+            if password == None:
                 self.tor_controller.authenticate()
-            except (stem.SocketError,ConnectionRefusedError) as err:
-                reporter.FindError(err , True)
-        else:
-            try:
+            else:
                 self.tor_controller.authenticate(password = password)
-            except stem.SocketError as err:
-                reporter.FindError(err , True)
+        except Exception as err:
+            self.reporter.FindError("Tor configuration invalid or server down :: {}".format(err) , True)
