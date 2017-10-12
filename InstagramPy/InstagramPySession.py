@@ -37,18 +37,19 @@ class InstagramPySession:
     password_list_md5_sum= None
     password_list_buffer = None
     password_list_length = 0
+    eopl            = False
     current_line    = 1
     ip              = None
-    reporter        = None
+    cli        = None
     bot             = requests.Session()
 
-    def __init__(self , username , password_list , configuration , save_location , reporter):
+    def __init__(self , username , password_list , configuration , save_location , cli):
 
         self.username = username
-        self.reporter = reporter
+        self.cli = cli
 
         if not os.path.isfile(password_list):
-            reporter.FindError("password list not found at {}.".format(password_list) , True)
+            self.cli.ReportError("password list not found at {}.".format(password_list) )
         self.password_list = password_list
         '''
             Note: Always open password list with errors ignored because all password list
@@ -67,13 +68,13 @@ class InstagramPySession:
             save_location = "{}.instagram-py/".format(DEFAULT_PATH)
 
         if not os.path.isfile(configuration):
-            reporter.FindError("configuration file not found at {}".format(configuration) , True)
+            self.cli.ReportError("configuration file not found at {}".format(configuration) )
         else:
             try:
                 with open(configuration , "r") as fp:
                     configuration = json.load(fp)
             except Exception as err:
-                reporter.FindError("invalid configuration file at {}".format(configuraion) , True) 
+                self.cli.ReportError("invalid configuration file at {}".format(configuraion) ) 
 
             self.api_url        = configuration['api-url']
             self.user_agent     = configuration['user-agent']
@@ -110,19 +111,30 @@ class InstagramPySession:
             '''
             try:
                 self.ip = self.bot.get('https://icanhazip.com').content.rstrip().decode()
-            except requests.Exceptions as err:
-                reporter.FindError("Connection to host failed , check your connection and tor configuration." , True)
+            except KeyboardInterrupt:
+                self.cli.ReportError("process aborted by the user")
+            except (BaseException,Exception) as err:
+                self.cli.ReportError("Connection to host failed , check your connection and tor configuration." )
 
         if not os.path.exists(save_location):
-            reporter.Try(os.mkdir(save_location))
+            try:
+                os.mkdir(save_location)
+            except (BaseException , Exception) as err:
+                self.cli.ReportError(err)
+
             self.save_data = save_location
         else:
             self.save_data = save_location
 
-        self.bot.get(
-        "{}si/fetch_headers/?challenge_type=signup&guid={}".format(self.api_url , str(uuid.uuid4()).replace('-' , ''))
-        )
-        self.magic_cookie = self.bot.cookies['csrftoken']
+        try:
+            self.bot.get(
+            "{}si/fetch_headers/?challenge_type=signup&guid={}".format(self.api_url , str(uuid.uuid4()).replace('-' , ''))
+            )
+            self.magic_cookie = self.bot.cookies['csrftoken']
+        except KeyboardInterrupt:
+            self.cli.ReportError("cannot get the magic cookie , aborted by the user")
+        except (BaseException , Exception) as err:
+            self.cli.ReportError(err)
 
 
     '''
@@ -133,19 +145,19 @@ class InstagramPySession:
             - check if the user uses the same password list file for the same user
             - set the current password pointer to the given data
     '''
-    def ReadSaveFile(self):
+    def ReadSaveFile(self , isResume):
         if self.current_save == None:
-            self.CreateSaveFile()
+            self.CreateSaveFile(isResume)
         SaveFile = json.load(open(self.current_save , 'r'))
         self.current_line = SaveFile['line-count']
         if self.password_list_md5_sum == SaveFile['password-file-md5'] and self.username == SaveFile['username']:
-            c_line = 1
-            for line in self.password_list_buffer:
-                self.password = str(line)
-                if c_line == self.current_line:
-                    break
-                c_line += 1
-
+                c_line = 1
+                for line in self.password_list_buffer:
+                    self.password = str(line).rstrip()
+                    if c_line == self.current_line:
+                        break
+                    c_line += 1
+        return True
 
     '''
         UpdateSaveFile()
@@ -170,12 +182,15 @@ class InstagramPySession:
             - checks if we have not openned any save file but know the save location.
             - if yes , creates with default settings to the location.
     '''
-    def CreateSaveFile(self):
+    def CreateSaveFile(self , isResume):
         if self.current_save == None and not self.save_data == None:
             save = '{}{}.dat'.format(self.save_data , hashlib.sha224(self.username.encode('utf-8')).hexdigest())
             self.current_save = save
             if not os.path.isfile(save):
                 self.UpdateSaveFile()
+            else:
+                if not isResume:
+                    self.UpdateSaveFile()
 
     '''
         CurrentPassword()
@@ -190,13 +205,13 @@ class InstagramPySession:
             - increaments and sets the next password as our current password
     '''
     def NextPassword(self):
-        if not self.password_list_buffer == None:
+        if not self.current_line > self.password_list_length:
             for line in self.password_list_buffer:
                 self.password = str(line.rstrip())
-                self.current_line += 1
                 break
+            self.current_line += 1
         else:
-            reporter.FindError("calling NextPassword without password file." , True)
+            self.eopl = True
 
     '''
         GetUsername()
@@ -244,4 +259,4 @@ class InstagramPySession:
             else:
                 self.tor_controller.authenticate(password = password)
         except Exception as err:
-            self.reporter.FindError("Tor configuration invalid or server down :: {}".format(err) , True)
+            self.cli.ReportError("Tor configuration invalid or server down :: {}".format(err) )

@@ -1,4 +1,10 @@
-#MANIFEST.in
+# The MIT License.
+# Copyright (C) 2017 The Future Shell , DeathSec.
+#
+# @filename    : MANIFEST.IN
+# @description : Things that I want to avoid and include in the
+# 		 python package.
+
 exclude .gitignore
 exclude .coverage
 exclude preview.png
@@ -11,3 +17,4 @@ prune build
 prune dist
 recursive-exclude *.egg-info *
 recursive-include tests *
+recursive-exclude observations *

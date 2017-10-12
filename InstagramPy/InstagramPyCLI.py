@@ -2,245 +2,184 @@
 # Copyright (C) 2017 The Future Shell , DeathSec.
 #
 # @filename    : InstagramPyCLI.py
-# @description : Simple and easy higher level api for Instagram-Py CLI Interface
-#                using Python's ncurses library.
-import curses
-import threading
-import AppInfo
+# @description : Simple command line interface to display progress
+#                and efficiently show response too.
+
+from InstagramPy import AppInfo
+import datetime
+from .colors import *
 
 class InstagramPyCLI:
-    '''
-        @progress_win -> Progress bar that will be repainted every time
-        @status       -> Shows the current motive of the program
-        @appInfo      -> JSON which contains all required information for
-                         Instagram-Py
-        @screen       -> Curses init object
-        @progress_win -> progress bar window
-        @started      -> Start Date and Time.
-        @progress_title -> Title for @progress_win
-        @total        -> Total passwords in file
-        @tried        -> Finished passwords from the file
-    '''
-    status              = ""
-    progress_win        = ""
-    screen              = ""
-    appInfo             = ""
-    started             = ""
-    progress_title      = ""
-    total               = 1
-    tried               = 1
+    username = None
+    password_list = None
+    started = None
+    verbose = 0
 
-    '''
-        __init__ :
-            - Updates @appInfo
-            - Initialize curses to @screen
-
-        @appInfo = @param info
-        @started = @param started
-        @total   = @param total
-
-    '''
-
-    def __init__(self , info , started , total):
-        '''
-            -- Update @appInfo --
-        '''
+    def __init__(self , appinfo , started , verbose_level):
         try:
-            if info['name'] and info['author']: # try if we got the info's right
-                self.appInfo = info
-            else:
-                self.appInfo = AppInfo.appInfo # or revert to default info!
+            self.verbose = int(verbose_level)
+            self.started = started
+            if not appinfo == None:
+                appinfo = appinfo
         except:
-                self.appInfo = AppInfo.appInfo
+            self.verbose = 0
+            self.started = started
+            appinfo = AppInfo.appInfo
 
-        self.started = started # the attack begin!
-        self.total   = int(total)
-        '''
-            -- Update @screen to init curses --
-        '''
-        self.screen = curses.initscr()
-        curses.noecho()
-        curses.cbreak()
-        if curses.has_colors():
-            curses.start_color()
-            curses.use_default_colors()
-            curses.init_pair(1 , curses.COLOR_MAGENTA, curses.COLOR_WHITE) # NAME [COLOR MAGENTA]
-            curses.init_pair(2 , curses.COLOR_GREEN, curses.COLOR_WHITE) # DD:HH:MM [COLOR GREEN]
-            curses.init_pair(3 , curses.COLOR_WHITE, curses.COLOR_WHITE) # SPACE
-            curses.init_pair(4 , curses.COLOR_BLUE, curses.COLOR_WHITE) # VERSION [COLOR BLUE]
-            curses.init_pair(5 , curses.COLOR_YELLOW , 0)
-            curses.init_pair(6 , curses.COLOR_BLUE   , 0)
-            curses.init_pair(7 , curses.COLOR_RED , curses.COLOR_WHITE)
-            curses.init_pair(8 , curses.COLOR_WHITE , 0)
-            curses.init_pair(9 , curses.COLOR_YELLOW , curses.COLOR_YELLOW)
-            curses.init_pair(10 , curses.COLOR_WHITE , curses.COLOR_YELLOW)
+        self.HEADER = "{} {} , {}.\nCopyright (C) {} {} , {}.\n".format(appinfo['name'] ,
+                                                                        appinfo['version'] ,
+                                                                        appinfo['description'] ,
+                                                                        appinfo['year'] ,
+                                                                        appinfo['company'] ,
+                                                                        appinfo['author'])
+        self.HEADER = Fore.MAGENTA + self.HEADER + Style.RESET_ALL
 
-        curses.curs_set(0)
+    def ReportError(self , error):
+        print('{}{}fatal error::{} {}'.format(Style.BRIGHT , Fore.RED , Style.RESET_ALL , error))
+        exit(-1)
 
-    def PaintHeader(self):
-        '''
-            ------------------------------------------
-            | NAME          DD:HH:MM         VERSION |
-            ------------------------------------------
-        '''
-
-        self.screen.addstr(0 , 0 , self.appInfo['name'] , curses.color_pair(1))
-        current_pos = len(self.appInfo['name'])
-        while current_pos < int(curses.COLS//2 - len(str(self.started))//2):
-            self.screen.addstr(0 , current_pos , ' ' , curses.color_pair(3))
-            current_pos += 1
-        self.screen.addstr(0 , current_pos , str(self.started) , curses.color_pair(2))
-        current_pos += len(str(self.started))
-        while current_pos < int(curses.COLS - len(self.appInfo['version'])):
-            self.screen.addstr(0 , current_pos , ' ' , curses.color_pair(3))
-            current_pos += 1
-        self.screen.addstr(0 , current_pos , self.appInfo['version'] , curses.color_pair(4))
-        self.screen.refresh()
+    def PrintHeader(self):
+        print(self.HEADER)
         return True
 
-    '''
-        @param username -> Target Account
-        @param password_list -> password list path
-    '''
-
-    def PaintResourceInfo(self , username , password_list):
-        '''
-            [TARGET USERNAME]: <username>    [ PASSWORD LIST ]: <password_list>
-        '''
-
-        bold_yellow = curses.A_BOLD
-        bold_yellow |= curses.color_pair(5)
-        bold_blue = curses.A_BOLD
-        bold_blue |= curses.color_pair(6)
-
-        USERNAME = "[TARGET USERNAME]: "
-        PASSWORD_LIST = "[ PASSWORD LIST ]: "
-
-
-        current_pos = curses.COLS//2 - (4 + len(USERNAME)//2 + len(username)//2 + len(PASSWORD_LIST)//2 + len(password_list)//2)
-
-        self.screen.addstr(2 , current_pos , USERNAME ,bold_yellow)
-        current_pos += len(USERNAME)
-
-        self.screen.addstr(2 , current_pos , username , bold_blue)
-        current_pos += len(username) + 4
-
-        self.screen.addstr(2 , current_pos , PASSWORD_LIST, bold_yellow)
-        current_pos += len(PASSWORD_LIST)
-
-        self.screen.addstr(2 , current_pos , password_list , bold_blue)
-
-        self.screen.refresh()
+    def PrintMagicCookie(self , magic_cookie):
+        print('[{}+{}] {}Magic Cookie{} :: {}{}{}'.format(Fore.GREEN ,
+                                                    Style.RESET_ALL ,
+                                                    Fore.YELLOW ,
+                                                    Style.RESET_ALL ,
+                                                    Style.BRIGHT ,
+                                                    magic_cookie,
+                                                    Style.RESET_ALL
+        ))
         return True
 
-    '''
-        @progress_title = @param title
-    '''
-
-    def PaintProgressBar(self , title):
-        '''
-                        [ <TITLE> ]
-        |==========================================|
-
-        '''
-
-
-        self.progress_title = title
-        self.progress_win = curses.newwin(4 , curses.COLS , 4 , 0)
-        bold_white = curses.A_BOLD | curses.color_pair(8)
-
-        self.progress_win.addstr(0 , curses.COLS//2 - len(self.progress_title)//2 , self.progress_title , curses.color_pair(7))
-        current_pos = curses.COLS//6
-        self.progress_win.addstr(2 , current_pos , '[' , bold_white)
-        current_pos += 1
-        self.progress_win.addstr(2 , int(curses.COLS - current_pos) , ']' , bold_white)
-
-        percentage = int((self.tried/self.total*100)/100 * (curses.COLS - current_pos))
-
-        while current_pos < percentage:
-            self.progress_win.addstr(2 , current_pos , ' ' , curses.color_pair(9))
-            current_pos += 1
-
-        self.progress_win.addstr(2 , curses.COLS//2 - len(str(self.tried) + " Finished.")//2 , str(self.tried) + " Finished." , curses.color_pair(10))
-        self.progress_win.refresh()
+    def PrintDatetime(self):
+        print('{}[{}+{}{}]{} {}Started{} @ {}'.format(Style.BRIGHT ,
+                                                            Fore.YELLOW ,
+                                                            Style.RESET_ALL ,
+                                                            Style.BRIGHT ,
+                                                            Style.RESET_ALL ,
+                                                            Fore.MAGENTA ,
+                                                            Style.RESET_ALL + Fore.YELLOW ,
+                                                            str(self.started) + Style.RESET_ALL
+        ))
         return True
 
-    def UpdateProgressBar(self , tried):
-        self.progress_win.clear()
-        self.progress_win.refresh()
-        self.PaintProgressBar(self.progress_title)
-        self.tried = tried
+    def PrintResource(self , username , password_list):
+        self.username       = username
+        self.password_list  = password_list
+        print('{}[{}*{}{}]{} {}USERNAME{} :: {}'.format(Style.BRIGHT ,
+                                                            Fore.RED ,
+                                                            Style.RESET_ALL ,
+                                                            Style.BRIGHT ,
+                                                            Style.RESET_ALL + Style.BRIGHT ,
+                                                            Fore.CYAN ,
+                                                            Style.RESET_ALL ,
+                                                            self.username
+        ))
+        print('{}[{}*{}{}]{} {}WORDLIST{}  :: {}'.format(Style.BRIGHT ,
+                                                            Fore.RED ,
+                                                            Style.RESET_ALL ,
+                                                            Style.BRIGHT ,
+                                                            Style.RESET_ALL + Style.BRIGHT ,
+                                                            Fore.CYAN ,
+                                                            Style.RESET_ALL ,
+                                                            self.password_list
+        ))
         return True
 
+    def PrintChangingIP(self):
+        print('[{}*{}] {}Changing IP Address... {}'.format(Fore.YELLOW,Style.RESET_ALL , Fore.GREEN , Style.RESET_ALL))
+        return True
 
-    def PaintStatusReport(self , current_passwd , status , current_ip , response , password_found , verbose):
-        '''
-                [ TRYING ] : <current_passwd>
-                [ STATUS ] : <status>
+    def PrintIPAddress(self , ip):
+        print('[{}+{}] {}Current IP{} :: {}{}{}'.format(Fore.RED ,
+                                                    Style.RESET_ALL ,
+                                                    Fore.YELLOW ,
+                                                    Style.RESET_ALL ,
+                                                    Style.BRIGHT ,
+                                                    str(ip),
+                                                    Style.RESET_ALL
+        ))
+        return True
 
-            [ CURRENT IP ]: 255.255.255.255
-            [  RESPONSE  ]: <response>
-        '''
-        CUR_IP_TEXT = "[ CURRENT IP ]: "
-        STATUS_TEXT = "     [   STATUS   ]: "
-        RESPON_TEXT = "[  RESPONSE  ]: "
-        CUR_PW_TEXT = "[   TRYING   ]: "
-        PASSW_FOUND = "[ PASSWORD FOUND ]: "
+    def PrintPassword(self , password):
+        print('[{}+{}] {}Trying{} :: {}{}{}'.format(Fore.GREEN ,
+                                                    Style.RESET_ALL ,
+                                                    Fore.CYAN ,
+                                                    Style.RESET_ALL ,
+                                                    Style.BRIGHT ,
+                                                    password,
+                                                    Style.RESET_ALL
+        ))
+        return True
 
-        bold_white = curses.A_BOLD | curses.color_pair(8)
+    def PrintRequest(self , req):
+        print('\n[{}-{}] --:: {}REQUEST START{} ::--'.format(Fore.MAGENTA , Style.RESET_ALL , Back.CYAN+Style.BRIGHT, Style.RESET_ALL))
+        print('{}{}{} {}{}{}'.format(Fore.GREEN , req.method , Style.RESET_ALL , Style.BRIGHT , req.url , Style.RESET_ALL))
+        print('{}{}{}'.format(Fore.YELLOW , '\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()) , Style.RESET_ALL))
+        print('{}{}{}'.format(Style.BRIGHT , req.body , Style.RESET_ALL))
+        print('[{}+{}] --:: {}REQUEST   END{} ::--'.format(Fore.GREEN , Style.RESET_ALL , Back.GREEN+Style.BRIGHT , Style.RESET_ALL))
+        return True
 
-        if password_found == False:
-            current_pos  = curses.COLS//2 - len(CUR_PW_TEXT)//2 - len(STATUS_TEXT)//2 - len(current_passwd)//2 - len(status)//2
-            self.screen.addstr(9 , current_pos , CUR_PW_TEXT)
-            current_pos += len(CUR_PW_TEXT)
-            self.screen.addstr(9 , current_pos , current_passwd , bold_white)
-            current_pos += len(current_passwd)
-            self.screen.addstr(9 , current_pos ,STATUS_TEXT)
-            current_pos += len(STATUS_TEXT)
-            self.screen.addstr(9 , current_pos , status , bold_white)
+    def PrintResponse(self ,resp):
+        print('\n[{}-{}] --:: {}RESPONSE START{} ::--'.format(Fore.MAGENTA , Style.RESET_ALL , Back.CYAN+Style.BRIGHT , Style.RESET_ALL))
+        print('{}{}{}'.format(Style.BRIGHT , str(resp) , Style.RESET_ALL))
+        print('[{}+{}] --:: {}RESPONSE   END{} ::--'.format(Fore.GREEN , Style.RESET_ALL , Back.GREEN+Style.BRIGHT , Style.RESET_ALL))
+        return True
+
+    def PrintProgress(self , password , ip , request , response):
+        if self.verbose == 0:
+            self.PrintPassword(password)
+        elif self.verbose == 1:
+            self.PrintPassword(password)
+            self.PrintResponse(response)
+        elif self.verbose == 2:
+            self.PrintPassword(password)
+            self.PrintResponse(response)
+            self.PrintIPAddress(ip)
         else:
-            '''
-                [ PASSWORD FOUND ]: <current_passwd>
-            '''
-            current_pos = curses.COLS//2 - len(PASSW_FOUND)//2 - len(current_passwd)//2
-            self.screen.addstr(9 , current_pos , PASSW_FOUND , bold_white)
-            current_pos += len(PASSW_FOUND)
-            self.screen.addstr(9 , current_pos , current_passwd , bold_white)
-
-        if  verbose == True:
-
-            current_pos = curses.COLS//6
-            self.screen.addstr(12 , current_pos , CUR_IP_TEXT , curses.color_pair(7))
-            current_pos += len(CUR_IP_TEXT)
-            self.screen.addstr(12 , current_pos , " " + current_ip , bold_white)
-            current_pos = curses.COLS//6
-            self.screen.addstr(14 , current_pos , RESPON_TEXT , curses.color_pair(7))
-            current_pos += len(RESPON_TEXT)
-            self.screen.addstr(14 , current_pos , " " + response , bold_white)
-
-        self.screen.refresh()
-
+            self.PrintPassword(password)
+            self.PrintRequest(request)
+            self.PrintResponse(response)
+            self.PrintIPAddress(ip)
         return True
 
-    '''
-        Kind of a Low level curses functions useful for the users.
-    '''
+    def ReportAttack(self , password , username = '' , password_list = ''):
+        print('\n[{}+{}] --:: {}ATTACK REPORT{} ::--'.format(Fore.YELLOW , Style.RESET_ALL , Back.YELLOW+Style.BRIGHT , Style.RESET_ALL))
+        if self.username == None or self.password_list == None:
+            self.username = username
+            self.password_list = password_list
 
-    def ResizeScr(self):
-        (height , width) = self.screen.getmaxyx()
-        curses.resizeterm(height, width)
+        self.PrintResource(self.username , self.password_list)
+        if not password == None:
+            print('{}[{}*{}{}]{} {}PASSWORD{}  :: {}\n'.format(Style.BRIGHT ,
+                                                                Fore.RED ,
+                                                                Style.RESET_ALL ,
+                                                                Style.BRIGHT ,
+                                                                Style.RESET_ALL ,
+                                                                Fore.CYAN ,
+                                                                Style.RESET_ALL + Style.BRIGHT + Fore.GREEN,
+                                                                password + Style.RESET_ALL
+            ))
+        else:
+            print('\n{}{}Password not found , Try using another wordlist.{}\n'.format(Style.BRIGHT , Fore.RED , Style.RESET_ALL))
 
-    def SoundBeep(self):
-        curses.beep()
+        print('{}[{}+{}{}]{} {}Finnished in {}{}'.format(Style.BRIGHT ,
+                                                      Fore.YELLOW ,
+                                                      Style.RESET_ALL ,
+                                                      Style.BRIGHT ,
+                                                      Style.RESET_ALL ,
+                                                      Fore.MAGENTA ,
+                                                      Style.RESET_ALL + Fore.YELLOW  ,
+                                                      str(datetime.datetime.now() - self.started) + Style.RESET_ALL
+        ))
+        print('{}Report bug, suggestions and new features at {}{}https://github.com/deathsec/instagram-py{}'.format(Fore.GREEN,
+                                                                                                                    Style.RESET_ALL,
+                                                                                                                    Style.BRIGHT,
+                                                                                                                    Style.RESET_ALL
+        ))
+        return True
 
-    def ClearScr(self):
-        self.screen.clear()
 
-    def GetsChar(self):
-        return self.screen.getch()
 
-    def Refreshs(self):
-        self.screen.refresh()
-
-    def CloseCLI(self):
-        curses.endwin()

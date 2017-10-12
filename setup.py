@@ -1,9 +1,16 @@
+# The MIT License.
+# Copyright (C) 2017 The Future Shell , DeathSec.
+#
+# @filename    : setup.py
+# @description : The traditional setup.py script for
+#                Installation from pip or easy_install
+
 from codecs import open
 from os.path import abspath, dirname, join , expanduser
 
 from setuptools import Command, find_packages, setup
 
-from instagram_py import __version__
+from InstagramPy import __version__
 
 
 this_dir = abspath(dirname(__file__))
@@ -33,7 +40,7 @@ setup(
     install_requires = ['requests' , 'requests[socks]' , 'stem'],
     entry_points = {
         'console_scripts': [
-            'instagram-py=instagram_py:main',
+            'instagram-py=InstagramPy:ExecuteInstagramPy',
         ],
     },
 
