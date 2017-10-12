@@ -26,7 +26,7 @@
 
 
   
-.. image:: https://raw.githubusercontent.com/deathsec/instagram-py/master/preview.gif
+.. image:: https://raw.githubusercontent.com/deathsec/instagram-py/v1.x.x/preview.gif
 
 .. image:: http://forthebadge.com/images/badges/built-with-love.svg
       :target: #
