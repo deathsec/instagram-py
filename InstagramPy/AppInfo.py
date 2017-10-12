@@ -5,7 +5,7 @@
 # @description : Application Information that are required
 
 appInfo = {
-    "version"     : "v1.3.2",
+    "version"     : "1.3.2",
     "name"        : "Instagram-Py",
     "description" : " Slick Instagram brute force command line tool.",
     "author"      : "DeathSec",

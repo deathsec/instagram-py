@@ -5,7 +5,7 @@
 # @description : History of what are the changes made to
 #                specific versions.
 
-- version 1.3.2 ( Stable )
+- version 1.3.3 ( Stable )
 	* killed some bugs
 	* error handling added
 	* removed flush and print output
