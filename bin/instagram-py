@@ -2,7 +2,7 @@
 #*********************************************************************************#
 # MIT License                                                                     #
 #                                                                                 #
-# Copyright (c) 2017 DeathSec                                                     #
+# Copyright (c) 2017 The Future Shell , DeathSec.                                 #
 #                                                                                 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy    #
 # of this software and associated documentation files (the "Software"), to deal   #
@@ -23,8 +23,8 @@
 # SOFTWARE.                                                                       #
 #*********************************************************************************#
 
-import instagram_py
+import InstagramPy
 
 if __name__ == '__main__':
-            instagram_py.main()
+            InstagramPy.ExecuteInstagramPy()
 
