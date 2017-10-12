@@ -20,7 +20,7 @@ with open(join(this_dir, 'README.rst'), encoding='utf-8') as file:
 setup(
     name = 'instagram-py',
     version = __version__,
-    description = 'A python script to execute brute force attack on Instagram',
+    description = 'Slick Instagram brute force command line tool writen in python.',
     long_description = long_description,
     url = 'https://github.com/DeathSec/Instagram-Py',
     download_url = 'https://github.com/deathsec/instagram-py/archive/v'+str(__version__)+'.tar.gz',
