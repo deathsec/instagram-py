@@ -180,9 +180,9 @@ wish to recreate this program in any other language.
 
 **You can see this live when you run the tool in maximam verbosity**
 
-```
+::
+
  $ instagram-py -vvv instatestgod__ password_list.lst
-```
 
 **You can also use Instagram-Py as a module , so that you can also use it in your script**
 
