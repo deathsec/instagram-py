@@ -178,7 +178,7 @@ open your **tor configuration** file usually located at **/etc/tor/torrc**
 wish to recreate this program in any other language.
 
 
-**You can see this live when you run the tool in maximam verbosity**
+**You can see this live when you run the tool in max verbosity**
 
 ::
 
