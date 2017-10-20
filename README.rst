@@ -170,6 +170,25 @@ open your **tor configuration** file usually located at **/etc/tor/torrc**
  $ instagram-py your_account_username path_to_password_list
 
 
+**Note**: Without the **-c** optional argument , instagram-py **will not continue the attack**
+
+::
+
+ usage: instagram-py [-h] [--countinue] [--verbose]
+                    USERNAME [USERNAME ...] PASSWORD_LIST [PASSWORD_LIST ...]
+
+ positional arguments:
+   USERNAME         username for Instagram account
+   PASSWORD_LIST    password list file to try with the given username.
+
+ optional arguments:
+   -h, --help       show this help message and exit
+   --countinue, -c  Countinue the previous attack if found.
+   --verbose, -v    Activate Verbose mode. ( Verbose level )
+
+ example: instagram-py -v instatestgod__ rockyou.txt
+
+
 ===========
  Algorithm
 ===========
