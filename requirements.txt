@@ -1,0 +1,4 @@
+stem==1.6.0
+requests==2.18.1
+setuptools==36.2.7
+pysocks==1.6.7
