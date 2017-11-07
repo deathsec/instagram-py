@@ -81,7 +81,7 @@
  using pip to get Instagram-py
 -------------------------------
 
-**Make sure you have got the latest version of pip(>= 9.0 and python(>= 3.6)**
+**Make sure you have got the latest version of pip(>= 9.0) and python(>= 3.6)**
 
 ::
 
@@ -93,6 +93,27 @@
  $ instagram-py # installed successfully
  $ # Now lets copy the config file to your hard drive!
  $ wget -O ~/instapy-config.json "https://git.io/v5DGy"
+
+
+-------------------------------
+ using git to get Instagram-Py
+-------------------------------
+
+**Make sure you have got the latest version of pip(>= 9.0) and python(>=3.6)**
+
+::
+
+ $ git clone https://github.com/deathsec/instagram-py
+ $ cd instagram-py
+ $ sudo pip3 install -r requirements.txt
+ $ # Fast use
+ $ cp bin/instagram-py .
+ $ chmod +x instagram-py
+ $ ./instagram-py # local build
+ $ # Complete Installation
+ $ sudo python3 setup.py install
+ $ instagram-py # installed successfully
+
 
 --------------------------------
     Configuring Instagram-Py
