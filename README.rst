@@ -290,7 +290,7 @@ Declare this if you want this function callback to be called when any account is
 
  # This is Mandatory!
 
- usernames = { # do not use '['
+ usernames = [ # do not use '{' , it will not work!
                   {
                         "id" : "Target Username" , # account username
                         # Optional if global_password_list is declared!
@@ -304,7 +304,7 @@ Declare this if you want this function callback to be called when any account is
                         # More Targets with the same syntax 
                   }
 
- }
+ ]
 
 
 
