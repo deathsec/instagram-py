@@ -26,5 +26,4 @@
 import InstagramPy
 
 if __name__ == '__main__':
-            InstagramPy.ExecuteInstagramPy()
-
+    InstagramPy.ExecuteInstagramPy()
