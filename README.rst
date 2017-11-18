@@ -26,7 +26,7 @@
 
 
   
-.. image:: https://raw.githubusercontent.com/deathsec/instagram-py/master/preview.gif
+.. image:: https://raw.githubusercontent.com/deathsec/instagram-py/v2.x.x/preview.gif
 
 .. image:: http://forthebadge.com/images/badges/built-with-love.svg
       :target: #
@@ -164,6 +164,8 @@ open your **tor configuration** file usually located at **/etc/tor/torrc**
 
 **Instagram-Py Scripting lets you run Custom Python Scripts Inside Instagram-Py!**
 
+**Never Run Instagram-Py with Multiple Instance! , Use Instagram-Py Scripting Instead!**
+
 
 ::
 
@@ -209,11 +211,20 @@ open your **tor configuration** file usually located at **/etc/tor/torrc**
 
 ::
 
+ $ # To Run Instagram-Py Script
  $ instagram-py -s [Script Location]
+ $      # OR
+ $ chmod +x attack_script.py
+ $ ./attack_script.py
+ $ # Please Make sure that attack_script.py has the shebang!
+ $ # Example: #!/usr/bin/instagram-py -s
 
 
 Instagram-Py now lets you run your custom scripts inside of it for maximum customization of your attacks.
 This Scripts are simple Python Scripts ( You Can just do anything that is possible with python )
+
+Refer the Wiki to get full information about Instagram-Py Scripting , https://github.com/deathsec/instagram-py/wiki
+Also look into the **examples** tree present in this repo , it contains simple example scripts.
 
 --------------------
  Reserved Variables
