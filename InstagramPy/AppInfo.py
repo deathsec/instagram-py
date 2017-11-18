@@ -11,5 +11,5 @@ appInfo = {
     "author": "DeathSec",
     "company": "The Future Shell",
     "year": "2017",
-    "example": "example: instagram-py -c -vvv -u instatestgod__ -p rockyou.txt"
+    "example": "example: instagram-py -c -vvv -u instatestgod__ -pl rockyou.txt"
 }
