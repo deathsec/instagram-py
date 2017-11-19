@@ -334,8 +334,8 @@ because of wordlist encoding error which i ignored because all the worldlist hav
 
 Contribute anything you can to this repo **(Issues | Pull request)** , help is much **appreciated**.
 
-**Please Refer** [CONTRIBUTING](.github/CONTRIBUTING.md) **for more information on contributing!**
-
+**Please Refer https://github.com/DeathSec/instagram-py/blob/master/.github/CONTRIBUTING.md**   
+**for more information on contributing!** 
 
 ===========================
  Using Instagram-Py as API
