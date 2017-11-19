@@ -129,10 +129,7 @@
  $      # OR
  $ instagram-py -cc
 
-<<<<<<< HEAD
-=======
-**The configuration file looks like this ( do not copy this , download the file from repo )**
->>>>>>> master
+
 
 **Or if you just want the default settings without the annoying questions then**
 
@@ -283,6 +280,7 @@ Declare this if you want this function callback to be called when any account is
 
 
 
+
 **usernames:**
 
 **This is the most important variable** , its of type dict and contains all information for the attack
@@ -361,11 +359,7 @@ wish to recreate this program in any other language.
 
 ::
 
-<<<<<<< HEAD
  $ instagram-py -vvv -u instatestgod__ -pl password_list.lst
-=======
- $ instagram-py -vvv instatestgod__ password_list.lst
->>>>>>> master
 
 **You can also use Instagram-Py as a module , so that you can also use it in your script**
 
@@ -456,28 +450,8 @@ because of wordlist encoding error which i ignored because all the worldlist hav
 
 Contribute anything you can to this repo **(Issues | Pull request)** , help is much **appreciated**.
 
-<<<<<<< HEAD
 **Please Refer CONTRIBUTING.rst for more information on contributing code!**
-=======
----------------------
- How to contribute ?
----------------------
 
-* Fork **https://github.com/DeathSec/Instagram-Py** via **Github**
-* Clone the Forked repo to your computer
-* Create a new branch with the name linked to the problem ( optional )
-* Do your changes in the new branch
-
-::
-
- $ git clone https://github.com/yourusername/instagram-py
- $ git checkout -b "Your new branch name"
- $ # DO YOUR CHANGES
-
-* push the changes to your repo
-* Merge your branch through a simple **pull request** to my repo explaning the changes you made.
-
->>>>>>> master
 
 ===========================
  Using Instagram-Py as API
@@ -522,21 +496,14 @@ This is a simple script to conduct a bructe force attack using instagram-py as a
  '''
  # USE THIS IF YOU WANT
  cli.PrintHeader()
-<<<<<<< HEAD
-=======
- cli.PrintResource( username , password)
->>>>>>> master
  cli.PrintDatetime()
  '''
  session = InstagramPySession(username , password , DEFAULT_PATH , DEFAULT_PATH , cli)
  session.ReadSaveFile(True) # True to countinue attack if found save file.
-<<<<<<< HEAD
-=======
  '''
  # USE THIS IF YOU WANT
  cli.PrintMagicCookie(session.magic_cookie)
  '''
->>>>>>> master
 
  '''
   Defining @param cli = None will make Instagram-Py run silently so you
