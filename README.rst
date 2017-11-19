@@ -218,106 +218,11 @@ open your **tor configuration** file usually located at **/etc/tor/torrc**
  Instagram-Py Scripting
 ========================
 
-::
-
- $ # To Run Instagram-Py Script
- $ instagram-py -s [Script Location]
- $      # OR
- $ chmod +x attack_script.py
- $ ./attack_script.py
- $ # Please Make sure that attack_script.py has the shebang!
- $ # Example: #!/usr/bin/instagram-py -s
-
-
 Instagram-Py now lets you run your custom scripts inside of it for maximum customization of your attacks.
 This Scripts are simple Python Scripts ( You Can just do anything that is possible with python )
 
 Refer the Wiki to get full information about Instagram-Py Scripting , https://github.com/deathsec/instagram-py/wiki
 Also look into the **examples** tree present in this repo , it contains simple example scripts.
-
---------------------
- Reserved Variables
---------------------
-
-**Please do not use these without the given syntax**
-
-**global_password_list:**
-
-Declare this if you want to use this password list as the default fallback password list!
-
-::
-
- #!/usr/bin/instagram-py -s 
- # Do not forget the shebangs! from above , if you want to run it like a script
- # Some Python Script Header Section
- 
- ....
- # This is not mandatory if local password lists are declared which you will see later.
- global_password_list = "{}/facebook.lst".format(os.path.expanduser('~'))
-
-
-**global_callback:**
-
-Declare this if you want this function callback to be called when any account is successfully cracked!
-
-::
-
- #!/usr/bin/instagram-py -s
- 
- ....
- # This is Optional
- # Callback function syntax , do not change this!
- # you can change the name...
- def message_me_when_hacked(username , password):
-        # Use Twilio Free API to Send Messages to Your Phone
-        print("Hacked @" + username + " with Password " + password)
- 
- ....
-
- global_callback = message_me_when_hacked
-
- ....
-
-
-
-
-**usernames:**
-
-**This is the most important variable** , its of type dict and contains all information for the attack
-
-::
-
- #!/usr/bin/instagram-py -s
-
- ....
-
- def very_important_ac_hacked(username , pass):
-        # Do Something Evil!
-
- ....
-
- # Do Whatever with python here
-
- # This is Mandatory!
-
- usernames = [ # do not use '{' , it will not work!
-                  {
-                        "id" : "Target Username" , # account username
-                        # Optional if global_password_list is declared!
-                        "password_list" : "Full Path to Wordlist" , # ~ does not work here!
-                        # use os.path.expanduser('~') for ~ ( Home Path Resolution! )
-                        "callback" : very_important_ac_hacked, # Optional
-                        "continue" : True, # Optional
-                        "verbose"  : 3, # Optional
-                  },
-                  { 
-                        # More Targets with the same syntax 
-                  }
-
- ]
-
-
-
 
 **You Can Always View the Cracked Passwords Using this command!**
 
@@ -325,27 +230,6 @@ Declare this if you want this function callback to be called when any account is
 
  $ instagram-py -i instatestgod__
  $ # Displays record if it is cracked in the past!
-
-
-
-**Note**: Without the **-c** optional argument , instagram-py **will not continue the attack**
-
-::
-
- usage: instagram-py [-h] [--countinue] [--verbose]
-                    USERNAME [USERNAME ...] PASSWORD_LIST [PASSWORD_LIST ...]
-
- positional arguments:
-   USERNAME         username for Instagram account
-   PASSWORD_LIST    password list file to try with the given username.
-
- optional arguments:
-   -h, --help       show this help message and exit
-   --countinue, -c  Countinue the previous attack if found.
-   --verbose, -v    Activate Verbose mode. ( Verbose level )
-
- example: instagram-py -v instatestgod__ rockyou.txt
-
 
 ===========
  Algorithm
@@ -450,8 +334,8 @@ because of wordlist encoding error which i ignored because all the worldlist hav
 
 Contribute anything you can to this repo **(Issues | Pull request)** , help is much **appreciated**.
 
-**Please Refer CONTRIBUTING.rst for more information on contributing code!**
-
+**Please Refer https://github.com/DeathSec/instagram-py/blob/master/.github/CONTRIBUTING.md**   
+**for more information on contributing!** 
 
 ===========================
  Using Instagram-Py as API
