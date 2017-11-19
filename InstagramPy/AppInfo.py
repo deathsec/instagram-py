@@ -5,12 +5,11 @@
 # @description : Application Information that are required
 
 appInfo = {
-    "version"     : "1.3.3",
-    "name"        : "Instagram-Py",
-    "description" : " Slick Instagram brute force command line tool.",
-    "author"      : "DeathSec",
-    "company"     : "The Future Shell",
-    "year"        : "2017",
-    "example"     : "example: instagram-py -v instatestgod__ rockyou.txt"
+    "version": "2.0.0",
+    "name": "Instagram-Py",
+    "description": " Slick Instagram brute force command line tool",
+    "author": "DeathSec",
+    "company": "The Future Shell",
+    "year": "2017",
+    "example": "example: instagram-py -c -vvv -u instatestgod__ -pl rockyou.txt"
 }
-

