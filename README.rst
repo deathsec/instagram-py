@@ -91,6 +91,14 @@
 ==============
  Installation
 ==============
+---------------------------------
+ Upgrading Instagram-Py with pip
+---------------------------------
+
+::
+
+ $ sudo pip3 install instagram-py --upgrade
+
 
 -------------------------------
  using pip to get Instagram-py
