@@ -6,6 +6,7 @@
 #                InstagramPySession , InstagramPyReports and InstagramPyCLI.
 #                the main attack script.
 import uuid
+import time
 import sys
 import hmac
 import urllib
@@ -102,7 +103,13 @@ class InstagramPyInstance:
                                            )
                     self.cli.ReportAttack(self.session.CurrentPassword())
             else:
-                response_data = (r.json())['message']
+                try:
+                    response_data = (r.json())['message']
+                except:
+                    # sleep for some seconds to let instagram recover
+                    time.sleep(3)
+                    return True
+
                 if response_data == 'challenge_required':
                     self.password_found = True
                     if not self.cli == None:
