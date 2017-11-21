@@ -4,6 +4,9 @@ ChangeLog for Instagram-Py
 
 Holds the History of releases and changes made for the software.
 
+version 2.0.1
+        * Fixes JSON Decoding error from instagram api response
+
 version 2.0.0 ( 2017.11.19 )
 	* **New Feature:** Instagram-Py Scripting
 	* **New Feature:** Instagram-Py Configuration Creator
